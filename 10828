@@ -1,0 +1,81 @@
+#include <iostream>
+#include <string>
+using namespace std;
+#define MAX 12345
+int top;
+class stack // 내가 해본건 class의 진정한 의미를 알지 못하고 써본거... 이건 안쓴것만 못함 ㅋㅋ
+{			// C++ 책 사서 공부해야 될듯...
+private:
+	int size;
+	int num;
+	int stk[MAX];
+public:
+	void compare(string& cmd)
+	{	//if else보다 switch case가 더 깔끔할듯 cin.getline
+		//string a = "push";
+		if(cmd == "push") // cmd == a 그러나 cmd == "push"는 안됌
+		{
+			cin >> num;
+			push(); // 따로 빼봤지만 별로 깨끗해진 느낌없음
+		}
+		else if(cmd == "pop")
+		{
+			if(top <= 0)
+			{
+				cout << -1 << endl;
+				top = 0;
+				return;
+			}
+			top--;
+			cout << stk[top] << endl;
+		}
+		else if(cmd == "size")
+		{
+			cout << top << endl;
+		}
+		else if(cmd == "empty")
+		{
+			if(top == 0)
+			{
+				cout << 1 << endl;
+			}
+			else
+			{
+				cout << 0 << endl;
+			}
+		}
+		else if(cmd == "top")
+		{
+			if(top <= 0)
+			{
+				cout << -1 << endl;
+				top = 0;
+				return;
+			}
+			cout << stk[--top] << endl;
+			top++;
+		}
+	}
+	void push()
+	{
+		if(top > MAX)
+		{
+			cout << "full";
+		}
+		stk[top] = num;
+		top++;
+	}
+};
+int main()
+{
+	int testCase;
+	//freopen("input.txt","r",stdin);
+	cin >> testCase;
+	for(int i = 0; i < testCase; i++)
+	{
+		stack s;
+		string command;
+		cin >> command;
+		s.compare(command);
+	}
+}
