@@ -1,26 +1,25 @@
 #include <iostream>
 #include <cstdio>
 #include <vector>
-#include <string>
 using namespace std;
 
-int count;
 int cursor = 1;
 		
-typedef struct node
-{
-	int key;
-	char data;
-}node;
+//typedef struct node
+//{
+//	int key;
+//	char data;
+//}node;
 	
-void show(vector<node> nodes)
+void show(vector<int> nodes)
 {
 	for(int i = 0; i < nodes.size(); i++)
 	{
-		cout << nodes[i].data;
+		//cout << nodes[i];
+		putchar(nodes[i]);
 	}
 }
-void chk(char& a, vector<node>& nodes)
+void chk(char& a, vector<int>& nodes)
 {
 	switch(a)
 	{
@@ -45,34 +44,30 @@ void chk(char& a, vector<node>& nodes)
 			}
 			else
 				nodes.erase(nodes.begin() + (cursor - 2));
-				count--;
 				cursor--;
 			break;
 		
 		case 'P':
-			char name;
-			cin >> name;
-			struct node temp;
-			temp.data = name;
-			temp.key = count + 1;
-			nodes.insert(nodes.begin() + (cursor - 1), temp);
+			//char name;
+			getchar();
+			int data = getchar();
+			//cin >> name;
+			//int data = name;
+			nodes.insert(nodes.begin() + (cursor - 1), data);
 			cursor++;
-			count++;
 			break;
-		
 	}
 }
 int main()
 {
-	vector<node> nodes;
+	vector<int> nodes;
 	freopen("input.txt","r",stdin);	
 	int num;
-	struct node temp;
-	temp.data = getchar();
-	while(temp.data != '\n'){
-		temp.key = ++count;
-		nodes.push_back(temp);
-		temp.data = getchar();
+	int data;
+	data = getchar();
+	while(data != '\n'){
+		nodes.push_back(data);
+		data = getchar();
 		cursor++;
 	}
 	cin >> num;
