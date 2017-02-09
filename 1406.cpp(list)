@@ -1,0 +1,94 @@
+#include <iostream>
+#include <cstdio>
+#include <vector>
+#include <list>
+using namespace std;
+
+	
+int cursor = 1;
+int count;		
+//typedef struct node
+//{
+//	int key;
+//	char data;
+//}node;
+	
+void show(list<int>& nodes)
+{
+	list<int>::iterator it1;
+	for(it1 = nodes.begin(); it1 != nodes.end(); it1++)
+	{
+		putchar(*it1);
+	}
+}
+void chk(int& a, list<int>& nodes)
+{
+	list<int>::iterator it1;	
+	switch(a)
+	{
+		case 'L':
+			if(cursor != 1)
+			{
+				cursor--;
+			}
+			break;
+
+		case 'D':
+			if(cursor != count + 1) //if(cursor != nodes.size() + 1) // 사이즈 계산이 문제??
+			{
+				cursor++;
+			}
+			break;
+		
+		case 'B':
+			if(cursor == 1)
+			{
+				break;
+			}
+			else
+			{
+				it1 = nodes.begin();
+				advance(it1,cursor - 2);
+				nodes.erase(it1);
+				cursor--;
+				count--;
+			}
+			break;
+		
+		case 'P':
+			//char name;
+			it1 = nodes.begin();	
+			getchar();
+			int data = getchar();
+			//cin >> name;
+			//int data = name;
+			advance(it1,cursor - 1);
+			nodes.insert(it1, data);
+			cursor++;
+			count++;
+			break;
+	}
+}
+int main()
+{
+	list<int> nodes;			
+	freopen("input.txt","r",stdin);	
+	int num;
+	int data;
+	int a;
+	data = getchar();
+	while(data != '\n'){
+		nodes.push_back(data);
+		data = getchar();
+		cursor++;
+		count++;
+	}
+	cin >> num;
+	for(int i = 0; i < num; i++)
+	{
+		getchar();
+		a = getchar();
+		chk(a, nodes);	
+	}
+	show(nodes);
+}
