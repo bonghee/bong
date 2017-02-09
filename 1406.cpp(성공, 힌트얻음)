@@ -1,0 +1,74 @@
+#include <iostream>
+#include <cstdio>
+#include <string>
+#include <stack>
+using namespace std;
+	
+void show(stack<int>& left, stack<int>& right)
+{
+	while(!left.empty())
+	{
+		right.push(left.top());
+		left.pop();
+	}
+	while(!right.empty())
+	{
+		putchar(right.top());
+		right.pop();
+	}
+}
+void chk(int& a, stack<int>& left, stack<int>& right)
+{
+	switch(a)
+	{
+		case 'L':
+			if(!left.empty())
+			{
+				right.push(left.top());
+				left.pop();	
+			}
+			break;
+
+		case 'D':
+			if(!right.empty())
+			{
+				left.push(right.top());
+				right.pop();
+			}
+			break;
+		
+		case 'B':
+			if(!left.empty())
+			{
+				left.pop();
+			}
+			break;
+		
+		case 'P':
+			getchar();
+			int data = getchar();
+			left.push(data);
+			break;
+	}
+}
+int main()
+{
+	stack<int> left, right;
+	string data;
+	freopen("input.txt","r",stdin);	
+	int num;
+	int a;
+	cin >> data;
+	for(int i = 0; i < data.size(); i++)
+	{
+		left.push(data[i]);
+	}
+	cin >> num;
+	for(int i = 0; i < num; i++)
+	{
+		getchar();
+		a = getchar();
+		chk(a, left, right);	
+	}
+	show(left, right);
+}
