@@ -25,7 +25,7 @@ void chk(char& a, vector<node>& nodes)
 	switch(a)
 	{
 		case 'L':
-			if(cursor != 0)
+			if(cursor != 1)
 			{
 				cursor--;
 			}
@@ -39,7 +39,7 @@ void chk(char& a, vector<node>& nodes)
 			break;
 		
 		case 'B':
-			if(cursor == 0)
+			if(cursor == 1)
 			{
 				break;
 			}
