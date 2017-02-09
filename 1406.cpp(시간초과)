@@ -1,0 +1,86 @@
+#include <iostream>
+#include <cstdio>
+#include <vector>
+#include <string>
+using namespace std;
+
+int count;
+int cursor = 1;
+		
+typedef struct node
+{
+	int key;
+	char data;
+}node;
+	
+void show(vector<node> nodes)
+{
+	for(int i = 0; i < nodes.size(); i++)
+	{
+		cout << nodes[i].data;
+	}
+}
+void chk(char& a, vector<node>& nodes)
+{
+	switch(a)
+	{
+		case 'L':
+			if(cursor != 0)
+			{
+				cursor--;
+			}
+			break;
+		
+		case 'D':
+			if(cursor != nodes.size() + 1)
+			{
+				cursor++;
+			}
+			break;
+		
+		case 'B':
+			if(cursor == 0)
+			{
+				break;
+			}
+			else
+				nodes.erase(nodes.begin() + (cursor - 2));
+				count--;
+				cursor--;
+			break;
+		
+		case 'P':
+			char name;
+			cin >> name;
+			struct node temp;
+			temp.data = name;
+			temp.key = count + 1;
+			nodes.insert(nodes.begin() + (cursor - 1), temp);
+			cursor++;
+			count++;
+			break;
+		
+	}
+}
+int main()
+{
+	vector<node> nodes;
+	freopen("input.txt","r",stdin);	
+	int num;
+	struct node temp;
+	temp.data = getchar();
+	while(temp.data != '\n'){
+		temp.key = ++count;
+		nodes.push_back(temp);
+		temp.data = getchar();
+		cursor++;
+	}
+	cin >> num;
+	for(int i = 0; i < num; i++)
+	{
+		char a;
+		cin >> a;
+		chk(a, nodes);	
+	}
+	show(nodes);
+}
