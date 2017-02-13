@@ -1,0 +1,119 @@
+#include <iostream>
+#include <cstdio>
+#include <string>
+//원형큐로 짜보기!
+using namespace std;
+struct queu
+{
+	int size;
+	int *queue;
+	int front;
+	int rear;
+}q;
+class que{
+private:
+public:
+	void init()
+	{
+		q.size = 1;
+		q.queue = new int[q.size];
+		q.front = 0;
+		q.rear = 0;
+	}
+	void compare(string& s)
+	{//원형큐 + 확장
+		if(s == "push")
+		{
+			if((q.rear + 1) % q.size == q.front)
+			{
+				expand();
+			}
+			int num;
+			cin >> num;
+			q.rear = (++q.rear) % q.size;
+			q.queue[q.rear] = num;
+		}
+		else if(s == "pop")
+		{
+			if(q.front == q.rear)
+			{
+				cout << -1 << endl;
+			}
+			else
+			{
+				q.front = (++q.front) % q.size;
+				cout << q.queue[q.front] << endl;
+			}
+		}
+		else if(s == "size")
+		{
+			if(q.front <= q.rear)
+			{
+				cout << q.rear - q.front << endl;
+			}
+			else
+			{
+				cout << (q.size - q.front - 1) + (q.rear + 1) << endl; 
+			}
+		}
+		else if(s == "empty")
+		{
+			if(q.rear == q.front)
+			{
+				cout << 1 << endl;
+			}
+			else
+			{
+				cout << 0 << endl;
+			}
+		}
+		else if(s == "front")
+		{
+			if(q.rear == q.front)
+			{
+				cout << -1 << endl;
+			}
+			else
+			{
+				cout << q.queue[(q.front + 1) % q.size] << endl;
+			}
+		}
+		else if(s == "back")
+		{
+			if(q.rear == q.front)
+			{
+				cout << -1 << endl;
+			}
+			else
+			{
+				cout << q.queue[q.rear] << endl;
+			}
+		}
+	}
+	void expand()
+	{
+		int *temp = new int[q.size * 2 + 1];
+		for(int i = 0 ; i < q.size; i++)
+		{
+			temp[i] = q.queue[(q.front + i) % q.size]; 
+		}
+		//cout << _msize(q.head) << endl;
+		q.queue = temp;
+		q.rear = q.size - 1;
+		q.front = 0;
+		q.size = q.size * 2 + 1;
+	}
+};
+int main()
+{
+	que que;
+	que.init();
+	string s;
+	int num;
+	cin >> num;
+	for(int i = 0; i < num; i++)
+	{
+		cin >> s;
+		que.compare(s);
+	}
+}
