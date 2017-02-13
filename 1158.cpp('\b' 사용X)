@@ -9,9 +9,11 @@ struct queue
 	int front;
 	int size;
 	int* que;
+	int count;
 }q;
 void init(int& N)
 {
+	q.count = 0;
 	q.rear = 0;
 	q.front = 0;
 	q.size = N;
@@ -27,7 +29,7 @@ void pop()
 {
 	q.front++;
 }
-void abc(int& M)
+void abc(int& M, int& N)
 {
 	do
 	{
@@ -36,13 +38,21 @@ void abc(int& M)
 			pop();
 			push();
 		}
-		cout << q.que[q.front % q.size] << ',' << " ";
+		q.count++;
+		if(q.count < N)
+		{
+			cout << q.que[q.front % q.size] << ',' << " ";
+		}
+		else
+		{
+			cout << q.que[q.front % q.size];
+		}
 		pop();
-	}while((q.rear % q.size) != (q.front % q.size));
+	}while((q.rear % q.size) != (q.front % q.size)); // N만큼 출력하고 끝나게 해도됨
 }
 int main()
 {
-	//freopen("input.txt","r",stdin);
+	freopen("input.txt","r",stdin);
 	int N, M;
 	cin >> N >> M;
 	init(N);
@@ -52,7 +62,7 @@ int main()
 		q.rear++;
 	}
 	cout << '<';
-	abc(M);
-	cout << '\b' << '\b' << '>';
+	abc(M, N);
+	cout << '>';
 	delete []q.que;	
 }
