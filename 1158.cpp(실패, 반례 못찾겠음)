@@ -1,0 +1,58 @@
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+
+using namespace std;
+struct queue
+{
+	int rear;
+	int front;
+	int size;
+	int* que;
+}q;
+void init(int& N)
+{
+	q.rear = 0;
+	q.front = 0;
+	q.size = N;
+	q.que = new int[q.size];
+}
+void push()
+{
+	q.que[q.rear % q.size] = q.que[(q.front - 1) % q.size];
+	q.rear++; //q.rear = (++q.rear) % q.size;
+	q.rear = q.rear % q.size; 
+}
+void pop()
+{
+	q.front++;
+}
+void abc(int& M)
+{
+	do
+	{
+		for(int i = 0; i < M-1; i++)
+		{
+			pop();
+			push();
+		}
+		cout << q.que[q.front % q.size] << ',' << " ";
+		pop();
+	}while((q.rear % q.size) != (q.front % q.size));
+}
+int main()
+{
+	//freopen("input.txt","r",stdin);
+	int N, M;
+	cin >> N >> M;
+	init(N);
+	for(int i = 0; i < N; i++)
+	{
+		q.que[i] = i+1;
+		q.rear++;
+	}
+	cout << '<';
+	abc(M);
+	cout << '\b' << '\b' << '>';
+	delete []q.que;	
+}
