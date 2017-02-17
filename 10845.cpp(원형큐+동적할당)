@@ -98,7 +98,9 @@ public:
 			temp[i] = q.queue[(q.front + i) % q.size]; 
 		}
 		//cout << _msize(q.head) << endl;
-		q.queue = temp;
+		delete []q.queue;
+		q.queue = temp; //이거 해줄때 기존의 q 동적할당한 것 해제해줘야지!
+	
 		q.rear = q.size - 1;
 		q.front = 0;
 		q.size = q.size * 2 + 1;
@@ -106,6 +108,7 @@ public:
 };
 int main()
 {
+	freopen("input.txt","r",stdin);
 	que que;
 	que.init();
 	string s;
@@ -116,4 +119,5 @@ int main()
 		cin >> s;
 		que.compare(s);
 	}
+	return 0;
 }
