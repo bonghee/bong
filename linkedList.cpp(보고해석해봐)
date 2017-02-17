@@ -1,0 +1,203 @@
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <string>
+using namespace std;
+
+typedef struct node
+{
+	string data;
+	struct node* p;
+}node;
+class linked_list
+{
+private:
+public:
+	node* append(node *t)
+	{
+		string s;
+		cout << "원하는 문자열을 입력하세요 : ";
+		getline(cin,s,'\n');
+		t->data = s;
+		t->p = new node[sizeof(node)];
+		t = t->p;
+		t->p = NULL;
+		return t;
+	}
+	node* insert(node* t)
+	{
+		node* start = t;
+		int chk, num;
+		string s;
+		chk = display(t);
+		do
+		{
+			cout << "삽입하고 싶은 곳의 번호를 적으세요. : ";
+			cin >> num;
+		}while(num < 1 || num > chk);
+		getchar();
+		cout << "원하는 문자열을 입력하세요. : ";
+		getline(cin,s,'\n');
+		if(num == 1)
+		{
+			node *temp = new node[sizeof(node)];
+			temp->data = s;
+			temp->p = start;
+			start = temp;
+		}
+		else{
+			for(int i = 0; i < num-2; i++)
+			{
+				t = t->p;
+			}
+			node *temp = new node[sizeof(node)];
+			temp->data = s;
+			temp->p = t->p;
+			t->p = temp;
+		}
+		return start;
+	}
+	void update(node* t)
+	{
+		string temp, s;
+		int chk = display(t);
+		int num;
+		do{
+		cout << "수정하고 싶은 번호를 입력하세요. : ";
+		cin >> num;
+		}while(num < 1 || num > chk);
+		cout << "변경할 문자열을 입력하세요. : ";
+		getchar();
+		getline(cin,s,'\n');
+		for(int i = 0; i < num-1; i++)
+		{
+			t = t->p;
+		}
+		temp = t->data;
+		t->data = s;
+		cout << "수정 전 : " << temp << " -> " << "수정 후 : " << t->data << endl;
+	}
+	node* del(node* t)
+	{
+		int num;
+		int chk = display(t);
+		node *temp, *start = t;
+		do
+		{
+			cout << "삭제할 번호를 선택해주세요. : ";
+			cin >> num;
+		}while(num < 1 || num > chk);
+		if(num == 1)
+		{
+			start = t->p;
+			delete [] t;
+		}
+		else
+		{
+			for(int i = 0; i < num - 2; i++)
+			{
+				t = t->p;
+			}
+			temp = t->p;
+			t->p = t->p->p;
+			delete [] temp;
+		}
+		return start;
+	}
+	void search(node* t)
+	{
+		string s;
+		int chk = 0;
+		cout << "찾을 문자열을 입력하세요. ";
+		getline(cin,s,'\n');
+		while(t->p != NULL)
+		{
+			if(s == t->data)
+			{
+				cout << "문자열이 존재합니다. " << endl;
+				chk = 1;
+			}
+			t = t->p;
+		}
+		if(chk == 0)
+		{
+			cout << "문자열이 존재하지 않습니다. " << endl;
+		}
+	}
+	int display(node* t)
+	{
+		int i = 1;
+		while(t->p != NULL)
+		{
+			cout << i++ << "번째 : " << t->data << endl;
+			t = t->p;
+		}
+		return i-1; // 삽입시 사용
+	}
+	void free(node *t)
+	{
+		node* temp;
+		while(t != NULL)
+		{
+			temp = t;
+			t = t->p;
+			delete [] temp;
+		}
+	}
+}list;
+int show()
+{
+	cout << "원하는 번호를 고르시오." << endl;
+	puts("----------------------");
+	puts(" 1. AppendList (추가) ");
+	puts(" 2. InsertList (삽입) ");
+	puts(" 3. UpdateList (수정) ");
+	puts(" 4. DeleteList (삭제) ");
+	puts(" 5. SearchList (찾기) ");
+	puts(" 6. DisplayList (출력) ");
+	puts(" 0. QuitList (종료) ");
+	puts("----------------------");
+	int num;
+	cin >> num;
+	getchar();
+	return num;
+}
+int main()
+{
+	node *head;
+	node *tail;
+	head = new node[sizeof(node)];
+	tail = head;
+	head->p = NULL; //위 셋팅이 중요하고 append 할때 head 빈 곳에 값 넣고 빈 노드를 하나 만들어서 tail을 가리키게 하는 것이 중요함.
+	
+	while(1){
+		switch (show())
+		{
+		case 1:
+			tail = list.append(tail);
+			break;
+		case 2:
+			head = list.insert(head);
+			break;
+		case 3:
+			list.update(head);
+			break;
+		case 4:
+			head = list.del(head);
+			break;
+		case 5:
+			list.search(head);
+			break;
+		case 6:
+			list.display(head);
+			break;
+		case 0:
+			list.free(head);
+			exit(0);
+		default:
+			puts("없는 숫자입니다.");
+		}
+	}
+}
+
+
